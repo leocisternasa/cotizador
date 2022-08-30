@@ -9,11 +9,16 @@ function App() {
   const [cantidad, setCantidad] = useState(0);
   const [plazo, setPlazo] = useState("");
   const [totalLoanCost, setTotalLoanCost] = useState(0);
+  const [cotFormError, setCotFormError] = useState(false);
 
   let component;
-  if (totalLoanCost === 0) {
+  if (totalLoanCost === 0 || isNaN(totalLoanCost)) {
+    console.log(totalLoanCost)
     component = <Mensaje />
-  } else { component = <Result cantidad={cantidad} plazo={plazo} totalLoanCost={totalLoanCost} /> }
+  } else {
+    component = <Result cantidad={cantidad} plazo={plazo} totalLoanCost={totalLoanCost} />;
+    console.log(totalLoanCost)
+  }
   return (
     <div>
       <Header title="Cotizador de Préstamos" />
@@ -23,7 +28,9 @@ function App() {
           setCantidad={setCantidad}
           plazo={plazo}
           setPlazo={setPlazo}
-          setTotalLoanCost={setTotalLoanCost} />
+          setTotalLoanCost={setTotalLoanCost}
+          setCotFormError={setCotFormError}
+          cotFormError={cotFormError} />
       </div>
       <div className="mensaje">
         {component}

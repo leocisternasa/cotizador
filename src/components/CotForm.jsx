@@ -1,17 +1,16 @@
 import React from 'react';
-import { useState } from 'react';
 import { totalCost } from '../helpers'
 
-const CotForm = ({ cantidad, setCantidad, plazo, setPlazo, setTotalLoanCost }) => {
+const CotForm = ({ cantidad, setCantidad, plazo, setPlazo, setTotalLoanCost, setCotFormError, cotFormError }) => {
 
-  const [error, setError] = useState(false);
+
   const calculateLoan = (e) => {
     e.preventDefault();
     if (cantidad === 0 || plazo === "") {
-      setError(true);
-      console.log("aqui hay un error");
-    } else if (error) {
-      setError(false)
+      setCotFormError(true);
+
+    } else if (cotFormError) {
+      setCotFormError(false)
     }
 
     const totalLoanCost = totalCost(cantidad, plazo);
@@ -27,7 +26,8 @@ const CotForm = ({ cantidad, setCantidad, plazo, setPlazo, setTotalLoanCost }) =
         <div className="column">
           <div>
             <div>Cantidad Préstamo</div>
-            <input type="number" placeholder="Ej: 3000"
+            <div>Préstamo mínimo: $100</div>
+            <input type="number" placeholder="Ej: 100" min="100"
               onChange={(e) => setCantidad(e.target.value)}></input>
           </div>
           <div>
@@ -46,7 +46,7 @@ const CotForm = ({ cantidad, setCantidad, plazo, setPlazo, setTotalLoanCost }) =
 
         </div>
       </form>
-      {(error) ? <p className="error">Todos los campos son obligatorios</p> : ""}
+      {(cotFormError) ? <p className="error">Todos los campos son obligatorios</p> : ""}
     </>
   );
 }
